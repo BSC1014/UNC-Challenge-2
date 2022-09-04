@@ -1,7 +1,7 @@
 # Stock Analaysis Script - Refactored
 
 ## Example:
-  Sub AllStocksAnalysisRefactored()
+    Sub AllStocksAnalysisRefactored()
     Dim startTime As Single
     Dim endTime  As Single
 
@@ -54,16 +54,16 @@
 
     
     ''2a) Create a for loop to initialize the tickerVolumes to zero.
-  For i = 0 To 11
+    For i = 0 To 11
     tickerVolumes(i) = 0
     'tickerStartingPrices(i) = 0
     'tickeEndingPrices(i) = 0
 
-  Next i
+    Next i
     
     ''2b) Loop over all the rows in the spreadsheet.
     
-  For i = 2 To RowCount
+     For i = 2 To RowCount
 
     
         '3a) Increase volume for current ticker
@@ -95,7 +95,7 @@
     
         End If
        
-   Next i
+     Next i
         
 
     
@@ -137,4 +137,4 @@
     endTime = Timer
     MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 
-  End Sub
+     End Sub
