@@ -1,7 +1,10 @@
 # Stock Analaysis Script - Refactored
 
+## Overview:   
+   - Steve original sought to analyze the performance of a select few green energy stocks. His VBA worked well, but it was not equipped to handle large sets of data. Since Steve wanted to expand his analysis to the entire stock market, he needed to refactor his code to streamline it and enhance its processing speeds to allow for more data manipulation. As such Steve's original code was refactored and the results and analysis are as follows.
+
 ## Results:
-   - 2018 was clearly a down year for these stocks with only two stocks having positive returns, while all but one had positive returns in 2017. The code was successfully refactored, with the images below evidencing the stock performance in 2017 & 2018 of both the refactored and original codes. You can see the output is the exact same (we will get to the time efficincies later on):
+   - 2018 was clearly a down year for these stocks with only two stocks having positive returns, while all but one had positive returns in 2017. The code was successfully refactored, with the images below evidencing the stock performance in 2017 & 2018 of both the refactored and original codes. You can see the output is the exact same (we will get to the time efficiencies later):
     
         - 2017 Return Refactored: 
    
@@ -105,8 +108,8 @@
         Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
 
 ## Summary:
-   - Refactoring code has its advantages and disatvantages. From an advantage standpoint it can save runtime and make the code more organized and efficent. Comparativley, it can also make the code more complicated from a troubleshooting perspective, should an issue arise, especially if you are creating a VBA script for a team with very few VBA experts. In refactoring, additional time is spent enhancing the code and one must weigh if the the benefits (enhanced runtime & streamlined code) are worth the time it took to refactor the code and the complexity it added. Additionaly, one must ensure that the current code, once refactored, wont lead to the same issues as the old code. 
-   - In this example, the juice was worth the squeeze, the refactored code significantly cut down on code execution time, and is more apt to handle an entire stock markets worth of code vs. the original script. That being said, Steve should ensure he understands the refactored code should he need to make an adjustment or trouble shoot it in the future. Further, the refactored code propogated a potential issue in Steve's orginal code. Steve's base code relied on the assumption that the user would not sort the data at all and to find the begining and ending price it just needed to find the first and last row for each ticker. One should look to also enhance code when refactoring and think of these user issues, a better way to do this would be to find the max and min date values for each ticker and populate the prices on those dates. Example of the flaw in the original code as follows.
+   - Refactoring code has its advantages and disadvantages. From an advantage standpoint it can save runtime and make the code more organized and efficient. Comparatively, it can also make the code more complicated from a troubleshooting perspective, should an issue arise, especially if you are creating a VBA script for a team with very few VBA experts. In refactoring, additional time is spent enhancing the code and one must weigh if the benefits (enhanced runtime & streamlined code) are worth the time it took to refactor the code and the complexity it added. Additionally, one must ensure that the current code, once refactored, won’t lead to the same issues as the old code.
+   - In this example, the juice was worth the squeeze, the refactored code significantly cut down on code execution time and is more apt to handle an entire stock market worth of code vs. the original script. Steve should ensure he understands the refactored code should he need to make an adjustment or trouble shoot it in the future. Further, the refactored code propagated a potential issue in Steve's original code. Steve's base code relied on the assumption that the user would not sort the data at all and to find the beginning and ending price it just needed to find the first and last row for each ticker. One should look to also enhance code when refactoring and think of these user issues, a better way to do this would be to find the max and min date values for each ticker and populate the prices on those dates. Example of the flaw in the original code as follows.
                        
          '3b) Check if the current row is the first row with the selected tickerIndex.
          'If  Then
@@ -124,7 +127,7 @@
            End If
 
 
-## Refactored Code:
+## Refactored Code for Reference:
     Sub AllStocksAnalysisRefactored()
     Dim startTime As Single
     Dim endTime  As Single
