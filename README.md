@@ -1,6 +1,130 @@
 # Stock Analaysis Script - Refactored
 
-## Example:
+## Results:
+   - 2018 was clearly a down year for these stocks with only two stocks having positive returns, while all but one had positive returns in 2017. The code was successfully refactored, with the images below evidencing the stock performance in 2017 & 2018 of both the refactored and original codes. You can see the output is the exact same (we will get to the time efficincies later on):
+    
+        - 2017 Return Refactored: 
+   
+        ![2017 Refactored](https://user-images.githubusercontent.com/111612130/188525708-7be04510-21d3-4c47-a683-c1d825383934.png)
+   
+        - 2018 Return Refactored:
+   
+        ![2018 Refactored](https://user-images.githubusercontent.com/111612130/188525734-78be198a-c313-48f9-8485-eb096575f279.png)
+    
+        - 2017 Return Original:
+        
+  
+        <img width="230" alt="2017 Original" src="https://user-images.githubusercontent.com/111612130/188525945-a8c91cea-68db-4990-8935-cbeed547571e.png">
+  
+        - 2018 Return Original:
+        
+  
+       <img width="234" alt="2018 Original" src="https://user-images.githubusercontent.com/111612130/188525952-97e3ab20-4e64-43c8-bbaa-a931fecc7406.png">
+
+### Runtime
+
+   - The execution times were significantly better however on the refactored code vs. the original. The refactored code had a runtime of 0.07 seconds while the original had a run time of 0.54 seconds, clearly evidencing the benefits of the refactored code vs. the original. This enhanced runtime was also evident on when running the refactored script for year 2017. Examples as follows: 
+
+  2018 Original Runtime: 
+  
+  <img width="263" alt="Original Run Time" src="https://user-images.githubusercontent.com/111612130/188526272-8b572e09-b8c1-4ade-95ee-3277e406168f.png">
+  
+  2018 Refactored Runtime:
+  
+  ![Refactored Run Time](https://user-images.githubusercontent.com/111612130/188526299-07d8d150-45b9-410d-b480-d2d1df5604fe.png)
+  
+  2017 Refactored Runtime: 
+  
+  <img width="264" alt="Refactored 2017 run time" src="https://user-images.githubusercontent.com/111612130/188526326-e2b9f6d4-1d08-4eea-8546-1e6bf1f43930.png">
+
+   - Runtime enhancements can mainly be attributed to creating a tickerIndex, which allowed the code to loop through all the variables and build up and index which was vital towards enhancing runtime. Code example as follows:
+  
+    '1a) Create a ticker Index
+
+        tickerIndex = 0
+
+    '1b) Create three output arrays
+    
+    Dim tickerVolumes(12) As Long
+    Dim tickerStartingPrices(12) As Single
+    Dim tickerEndingPrices(12) As Single
+    
+
+    
+    ''2a) Create a for loop to initialize the tickerVolumes to zero.
+    For i = 0 To 11
+    tickerVolumes(i) = 0
+    
+
+    Next i
+    
+    ''2b) Loop over all the rows in the spreadsheet.
+    
+     For i = 2 To RowCount
+
+    
+        '3a) Increase volume for current ticker
+        tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+        
+  
+        
+        '3b) Check if the current row is the first row with the selected tickerIndex.
+        'If  Then
+       If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then
+        tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+            
+        End If
+            
+            
+        'End If
+        
+        '3c) check if the current row is the last row with the selected ticker
+         'If the next row’s ticker doesn’t match, increase the tickerIndex.
+        'If  Then
+            
+        If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
+        tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            
+        End If
+            '3d Increase the tickerIndex.
+            If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
+              tickerIndex = tickerIndex + 1
+    
+        End If
+       
+     Next i
+        
+
+    
+    '4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
+    For i = 0 To 11
+        
+        Worksheets("AllStocksAnalysisRefactored").Activate
+        Cells(4 + i, 1).Value = tickers(i)
+        Cells(4 + i, 2).Value = tickerVolumes(i)
+        Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
+
+## Summary:
+   - Refactoring code has its advantages and disatvantages. From an advantage standpoint it can save runtime and make the code more organized and efficent. Comparativley, it can also make the code more complicated from a troubleshooting perspective, should an issue arise, especially if you are creating a VBA script for a team with very few VBA experts. In refactoring, additional time is spent enhancing the code and one must weigh if the the benefits (enhanced runtime & streamlined code) are worth the time it took to refactor the code and the complexity it added. Additionaly, one must ensure that the current code, once refactored, wont lead to the same issues as the old code. 
+   - In this example, the juice was worth the squeeze, the refactored code significantly cut down on code execution time, and is more apt to handle an entire stock markets worth of code vs. the original script. That being said, Steve should ensure he understands the refactored code should he need to make an adjustment or trouble shoot it in the future. Further, the refactored code propogated a potential issue in Steve's orginal code. Steve's base code relied on the assumption that the user would not sort the data at all and to find the begining and ending price it just needed to find the first and last row for each ticker. One should look to also enhance code when refactoring and think of these user issues, a better way to do this would be to find the max and min date values for each ticker and populate the prices on those dates. Example of the flaw in the original code as follows.
+                       
+         '3b) Check if the current row is the first row with the selected tickerIndex.
+         'If  Then
+          If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then
+          tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+            
+          End If
+
+         '3c) check if the current row is the last row with the selected ticker
+          'If the next row’s ticker doesn’t match, increase the tickerIndex
+            
+         If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
+         tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            
+           End If
+
+
+## Refactored Code:
     Sub AllStocksAnalysisRefactored()
     Dim startTime As Single
     Dim endTime  As Single
@@ -56,8 +180,7 @@
     ''2a) Create a for loop to initialize the tickerVolumes to zero.
     For i = 0 To 11
     tickerVolumes(i) = 0
-    'tickerStartingPrices(i) = 0
-    'tickeEndingPrices(i) = 0
+    
 
     Next i
     
@@ -137,4 +260,4 @@
     endTime = Timer
     MsgBox "This code ran in " & (endTime - startTime) & " seconds for the year " & (yearValue)
 
-     End Sub
+     End Sub    
